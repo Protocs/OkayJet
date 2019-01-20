@@ -1,5 +1,4 @@
 import pygame
-import sys
 import util
 from settings import buttons
 from okayjet.objects.button import Button
@@ -16,13 +15,20 @@ class Start:
 
     def run(self):
         while self.start:
-            self.surface.fill((0, 0, 0))
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-            self.surface.blit(self.background, (0, 0))
-            buttons.update()
-            buttons.draw(self.surface)
-            pygame.display.flip()
+            self.events()
+            self.update()
             self.clock.tick(self.fps)
+
+    def events(self):
+        for event in pygame.event.get():
+            if event.type in (pygame.MOUSEBUTTONUP, pygame.KEYUP):
+                self.start = False
+            elif event.type == pygame.QUIT:
+                util.terminate()
+
+    def update(self):
+        self.surface.fill((0, 0, 0))
+        self.surface.blit(self.background, (0, 0))
+        buttons.update()
+        buttons.draw(self.surface)
+        pygame.display.flip()
