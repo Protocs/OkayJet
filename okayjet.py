@@ -5,6 +5,7 @@ import pygame
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.flip()
 
 start = Start(FPS, screen)
 start.run()

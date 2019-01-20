@@ -6,4 +6,4 @@ def load_image(filename):
     try:
         return pygame.image.load(fullname).convert_alpha()
     except pygame.error as msg:
-        raise SystemExit(msg)
+        print(msg)
