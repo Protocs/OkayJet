@@ -1,6 +1,6 @@
 import pygame
 from .gameobject import GameObject
-import util
+from okayjet import util
 
 
 class Player(GameObject):

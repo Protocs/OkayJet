@@ -1,7 +1,7 @@
 import pygame
-import util
+from okayjet import util
 from okayjet.objects.player import Player
-from settings import players
+from okayjet.settings import players
 
 
 class Game:

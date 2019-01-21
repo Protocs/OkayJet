@@ -1,6 +1,6 @@
 import pygame
-import util
-from settings import buttons
+from okayjet import util
+from okayjet.settings import buttons
 from okayjet.objects.button import Button
 
 
