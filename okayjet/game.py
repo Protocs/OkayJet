@@ -2,7 +2,7 @@ import pygame
 from okayjet import util
 from okayjet.objects.player import Player
 from okayjet.settings import players, SCREEN_WIDTH
-
+import time
 
 class Game:
     def __init__(self, fps, surface):
@@ -15,6 +15,7 @@ class Game:
         self.background_width = self.background.get_rect().width
         self.background_x = 0
         self.player = Player(players, 30, 355)
+        self.start_time = time.time()
 
     def run(self):
         while self.game:
@@ -35,7 +36,7 @@ class Game:
         if x < SCREEN_WIDTH:
             self.surface.blit(self.background, (x, 0))
         if self.player.rect.x > SCREEN_WIDTH // 4:
-            self.background_x -= 3
+            self.background_x -= 3 + ((time.time() - self.start_time) * 0.001)
         players.update()
         players.draw(self.surface)
         pygame.display.flip()
