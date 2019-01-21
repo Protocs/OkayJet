@@ -1,7 +1,7 @@
 import pygame
 from .gameobject import GameObject
 from okayjet import util
-
+from ..settings import SCREEN_WIDTH
 
 class Player(GameObject):
     def __init__(self, group, x, y):
@@ -15,6 +15,7 @@ class Player(GameObject):
         self.rect = self.rect.move(dx, dy)
 
     def update(self):
-        self.rect = self.rect.move(3, 0)
+        if self.rect.x < SCREEN_WIDTH // 4:
+            self.rect = self.rect.move(3, 0)
         if self.rect.y < 355 and not pygame.key.get_pressed()[pygame.K_SPACE]:
             self.rect.y += 3

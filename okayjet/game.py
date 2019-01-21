@@ -34,10 +34,9 @@ class Game:
         self.surface.blit(self.background, (x - self.background_width, 0))
         if x < SCREEN_WIDTH:
             self.surface.blit(self.background, (x, 0))
-        if self.player.rect.x < SCREEN_WIDTH // 4:
-            players.update()
-        else:
+        if self.player.rect.x > SCREEN_WIDTH // 4:
             self.background_x -= 3
+        players.update()
         players.draw(self.surface)
         pygame.display.flip()
 
