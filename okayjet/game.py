@@ -1,7 +1,7 @@
 import pygame
 from okayjet import util
 from okayjet.objects.player import Player
-from okayjet.settings import players
+from okayjet.settings import players, SCREEN_WIDTH
 
 
 class Game:
@@ -12,6 +12,8 @@ class Game:
         self.surface = surface
 
         self.background = util.load_image("background.jpg")
+        self.background_width = self.background.get_rect().width
+        self.background_x = 0
         self.player = Player(players, 30, 355)
 
     def run(self):
@@ -28,8 +30,14 @@ class Game:
 
     def update(self):
         self.surface.fill((0, 0, 0))
-        self.surface.blit(self.background, (0, 0))
-        players.update()
+        x = self.background_x % self.background_width
+        self.surface.blit(self.background, (x - self.background_width, 0))
+        if x < SCREEN_WIDTH:
+            self.surface.blit(self.background, (x, 0))
+        if self.player.rect.x < SCREEN_WIDTH // 4:
+            players.update()
+        else:
+            self.background_x -= 3
         players.draw(self.surface)
         pygame.display.flip()
 
