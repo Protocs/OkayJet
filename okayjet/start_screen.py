@@ -1,7 +1,5 @@
 import pygame
 from okayjet import util
-from okayjet.settings import buttons
-from okayjet.objects.button import Button
 
 
 class Start:
@@ -11,7 +9,7 @@ class Start:
         self.background = util.load_image("start_background.png")
         self.fps = fps
         self.surface = surface
-        self.start_button = Button(buttons, 150, 400, util.load_image("press_somewhere_image.png"))
+        self.start_button = util.load_image("press_somewhere_image.png")
 
     def run(self):
         while self.start:
@@ -28,7 +26,6 @@ class Start:
 
     def update(self):
         self.surface.fill((0, 0, 0))
+        self.background.blit(self.start_button, (150, 400))
         self.surface.blit(self.background, (0, 0))
-        buttons.update()
-        buttons.draw(self.surface)
         pygame.display.flip()
