@@ -10,6 +10,7 @@ class Start:
         self.fps = fps
         self.surface = surface
         self.start_button = util.load_image("press_somewhere_image.png")
+        self.logo = util.load_image("logo.png")
 
     def run(self):
         while self.start:
@@ -27,5 +28,6 @@ class Start:
     def update(self):
         self.surface.fill((0, 0, 0))
         self.background.blit(self.start_button, (150, 400))
+        self.background.blit(self.logo, (350, 100))
         self.surface.blit(self.background, (0, 0))
         pygame.display.flip()
