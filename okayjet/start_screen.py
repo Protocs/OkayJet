@@ -27,7 +27,7 @@ class Start:
 
     def update(self):
         self.surface.fill((0, 0, 0))
-        self.background.blit(self.start_button, (150, 400))
-        self.background.blit(self.logo, (350, 100))
         self.surface.blit(self.background, (0, 0))
+        self.background.blit(self.start_button, (150, 400))
+        self.background.blit(self.logo, (280, 75))
         pygame.display.flip()
