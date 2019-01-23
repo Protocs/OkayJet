@@ -1,29 +1,33 @@
 import pygame
-from okayjet import util
+from .util import terminate, load_image
+from .settings import FPS
 
 
 class Start:
-    def __init__(self, fps, surface):
-        self.start = True
-        self.clock = pygame.time.Clock()
-        self.background = util.load_image("start_background.png")
-        self.fps = fps
+    def __init__(self, surface):
         self.surface = surface
-        self.start_button = util.load_image("press_somewhere_image.png")
-        self.logo = util.load_image("logo.png")
+
+        # Была ли игра начата?
+        self.start = True
+
+        self.clock = pygame.time.Clock()
+
+        self.background = load_image("start_background.png")
+        self.start_button = load_image("press_somewhere_image.png")
+        self.logo = load_image("logo.png")
 
     def run(self):
         while self.start:
             self.events()
             self.update()
-            self.clock.tick(self.fps)
+            self.clock.tick(FPS)
 
     def events(self):
         for event in pygame.event.get():
             if event.type in (pygame.MOUSEBUTTONUP, pygame.KEYUP):
                 self.start = False
             elif event.type == pygame.QUIT:
-                util.terminate()
+                terminate()
 
     def update(self):
         self.surface.fill((0, 0, 0))
