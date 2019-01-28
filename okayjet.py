@@ -2,7 +2,7 @@ import pygame
 
 from okayjet.game import Game
 from okayjet.start_screen import Start
-from okayjet.settings import GAME_NAME, SCREEN_SIZE, FPS
+from okayjet.settings import GAME_NAME, SCREEN_SIZE
 
 pygame.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)

@@ -2,7 +2,6 @@ import pygame
 
 from .gameobject import GameObject
 from ..settings import SCREEN_WIDTH
-from .. import game as game_module
 
 
 class Player(GameObject):

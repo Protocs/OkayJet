@@ -11,6 +11,7 @@ class GameObject(Sprite):
 
         self.game = game
 
+        # noinspection PyUnresolvedReferences
         self.image = load_image(self.IMAGE)
 
         self.rect = self.image.get_rect()

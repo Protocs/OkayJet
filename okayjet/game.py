@@ -49,7 +49,6 @@ class Game:
         pygame.display.flip()
 
     def update_background(self):
-        self.surface.fill((0, 0, 0))
         x = self.background_x % self.background_width
         self.surface.blit(self.background, (x - self.background_width, 0))
         if x < SCREEN_WIDTH:
