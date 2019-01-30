@@ -7,3 +7,4 @@ SCREEN_SIZE = SCREEN_WIDTH, SCREEN_HEIGHT = 1000, 550
 
 all_sprites = pygame.sprite.Group()
 players = pygame.sprite.Group()
+coins = pygame.sprite.Group()
