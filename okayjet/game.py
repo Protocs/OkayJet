@@ -3,8 +3,8 @@ import time
 import pygame
 
 from . import util
-from .objects.player import Player
 from .objects.coin import Coin
+from .objects.player import Player
 from .settings import SCREEN_WIDTH, FPS
 
 
@@ -26,8 +26,16 @@ class Game:
         self.start_time = time.time()
         self.clock = pygame.time.Clock()
 
-        self.player = Player(self.sprite_groups['all'], 30, 355)
-        self.coin = Coin(self.sprite_groups['all'], 600, 100)
+        self.player = Player(self, (30, 355))
+        self.coin = Coin(self, (600, 100))
+
+    @property
+    def slide_speed(self):
+        return 3 + ((time.time() - self.start_time) * 0.05)
+
+    @property
+    def intro(self):
+        return self.player.rect.x > SCREEN_WIDTH // 4
 
     def run(self):
         while self.game:
@@ -53,11 +61,8 @@ class Game:
         self.surface.blit(self.background, (x - self.background_width, 0))
         if x < SCREEN_WIDTH:
             self.surface.blit(self.background, (x, 0))
-        if self.player.rect.x > SCREEN_WIDTH // 4:
-            self.background_x -= 3 + ((time.time() - self.start_time) * 0.05)
-        if self.player.rect.x > SCREEN_WIDTH // 4:
-            coins.update()
-        coins.draw(self.surface)
+        if self.intro:
+            self.background_x -= self.slide_speed
 
     def keypress_handler(self):
         pressed = pygame.key.get_pressed()
