@@ -82,5 +82,5 @@ class Game:
     def keypress_handler(self):
         pressed = pygame.key.get_pressed()
 
-        if pressed[pygame.K_SPACE]:
-            self.player.move(0, -4.5)
+        if pressed[pygame.K_SPACE] and self.player.rect.y >= 0:
+            self.player.move(0, -5.5)
