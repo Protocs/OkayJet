@@ -3,9 +3,10 @@ import time
 import pygame
 
 from . import util
-from .objects.coin import Coin
+from .objects.coin import Coin, load_random_group
 from .objects.player import Player
-from .settings import SCREEN_WIDTH, FPS
+from .settings import *
+import random
 
 
 class Game:
@@ -20,14 +21,14 @@ class Game:
         self.background_x = 0
 
         self.sprite_groups = {
-            'all': pygame.sprite.Group()
+            "all": pygame.sprite.Group(),
+            "coins": pygame.sprite.Group()
         }
 
         self.start_time = time.time()
         self.clock = pygame.time.Clock()
 
         self.player = Player(self, (30, 355))
-        self.coin = Coin(self, (600, 100))
 
     @property
     def slide_speed(self):
@@ -37,7 +38,12 @@ class Game:
     def intro(self):
         return self.player.rect.x > SCREEN_WIDTH // 4
 
+    @property
+    def _background_x(self):
+        return abs(self.background_x)
+
     def run(self):
+        pygame.time.set_timer(*COIN_SPAWN_EVENT)
         while self.game:
             self.events()
             self.update()
@@ -49,6 +55,15 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 util.terminate()
+            elif event.type == COIN_SPAWN_EVENT[0]:
+                random_group = load_random_group()
+                left = random.randint(SCREEN_WIDTH // 4, SCREEN_WIDTH - 100)
+                top = random.randint(0, SCREEN_HEIGHT - 200)
+                for i in range(len(random_group)):
+                    for j in range(len(random_group[i].rstrip())):
+                        if random_group[i].rstrip()[j] == "*":
+                            Coin(self, (self._background_x + left + COIN_DISTANCE * j,
+                                        top + COIN_DISTANCE * i))
 
     def update(self):
         self.update_background()
