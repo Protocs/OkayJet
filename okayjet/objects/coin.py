@@ -1,7 +1,9 @@
-from .x_slide_object import XSlideObject
 import random
 import os
+
 import pygame
+
+from .x_slide_object import XSlideObject
 
 
 def load_random_group():

@@ -1,12 +1,12 @@
 import time
+import random
 
 import pygame
 
-from . import util
+from .util import load_image, terminate
 from .objects.coin import Coin, load_random_group
 from .objects.player import Player
 from .settings import *
-import random
 
 
 class Game:
@@ -18,7 +18,7 @@ class Game:
         # Идет ли игра?
         self.game = True
 
-        self.background = util.load_image("background.jpg")
+        self.background = load_image("background.jpg")
         self.background_width = self.background.get_rect().width
         self.background_x = 0
 
@@ -62,7 +62,7 @@ class Game:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                util.terminate()
+                terminate()
             elif event.type == COIN_SPAWN_EVENT[0]:
                 random_group = load_random_group()
                 left = random.randint(SCREEN_WIDTH // 4, SCREEN_WIDTH - 100)

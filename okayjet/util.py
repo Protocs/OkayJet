@@ -1,6 +1,6 @@
-import pygame
-
 from os import path
+
+import pygame
 
 
 def load_image(filename):

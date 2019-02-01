@@ -1,4 +1,5 @@
 import pygame
+
 from .util import terminate, load_image
 from .settings import FPS
 
