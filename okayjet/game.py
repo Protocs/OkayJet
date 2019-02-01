@@ -31,6 +31,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.player = Player(self, (30, 355))
+        self.coins = 0
 
     @property
     def slide_speed(self):
