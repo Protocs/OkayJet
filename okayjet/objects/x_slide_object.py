@@ -7,4 +7,6 @@ class XSlideObject(GameObject):
     def update(self):
         if not self.game.intro:
             self.rect.x -= self.game.slide_speed
+            if self.rect.x < 0:
+                self.kill()
 
