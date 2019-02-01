@@ -13,7 +13,7 @@ class Player(GameObject):
         self.game = game
 
     def update(self):
-        if self.rect.x < SCREEN_WIDTH // 4:
+        if self.game.intro:
             self.rect = self.rect.move(3, 0)
 
         space_bar_pressed = pygame.key.get_pressed()[pygame.K_SPACE]

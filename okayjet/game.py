@@ -44,7 +44,7 @@ class Game:
         (персонаж выбегает из левой части экрана 
         без прокрутки фона)?
         """
-        return self.player.rect.x > SCREEN_WIDTH // 4
+        return self.player.rect.x < SCREEN_WIDTH // 4
 
     @property
     def _background_x(self):
@@ -85,7 +85,7 @@ class Game:
         self.surface.blit(self.background, (x - self.background_width, 0))
         if x < SCREEN_WIDTH:
             self.surface.blit(self.background, (x, 0))
-        if self.intro:
+        if not self.intro:
             self.background_x -= self.slide_speed
 
     def keypress_handler(self):
