@@ -9,8 +9,9 @@ class Player(GameObject):
 
     def __init__(self, game, pos):
         super().__init__(game, pos)
+
+        # Ускорение свободного падения
         self.speedup = 0.1
-        self.game = game
 
     def update(self):
         if self.game.intro:
