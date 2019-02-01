@@ -36,6 +36,9 @@ class Game:
     @property
     def slide_speed(self):
         """Скорость движения персонажа."""
+        timedelta = time.time() - self.start_time
+        if timedelta > 120:
+            return 9
         return 3 + ((time.time() - self.start_time) * 0.05)
 
     @property
