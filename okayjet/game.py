@@ -4,7 +4,7 @@ import random
 import pygame
 
 from .util import load_image, terminate
-from .objects.coin import Coin, load_random_group
+from .objects.coin import Coin, spawn_coin_group, load_random_group
 from .objects.player import Player
 from .settings import *
 
@@ -65,14 +65,7 @@ class Game:
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == COIN_SPAWN_EVENT[0]:
-                random_group = load_random_group()
-                left = random.randint(SCREEN_WIDTH // 4, SCREEN_WIDTH - 100)
-                top = random.randint(0, SCREEN_HEIGHT - 200)
-                for i in range(len(random_group)):
-                    for j in range(len(random_group[i].rstrip())):
-                        if random_group[i].rstrip()[j] == "*":
-                            Coin(self, (self._background_x + left + COIN_DISTANCE * j,
-                                        top + COIN_DISTANCE * i))
+                spawn_coin_group(self, load_random_group())
 
     def update(self):
         self.update_background()
