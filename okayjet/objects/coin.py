@@ -3,7 +3,8 @@ import os
 
 import pygame
 
-from .x_slide_object import XSlideObject
+from .collidable import Collidable
+from .player import Player
 
 
 def load_random_group():
@@ -12,6 +13,11 @@ def load_random_group():
         return file.readlines()
 
 
-class Coin(XSlideObject):
+class Coin(Collidable):
     IMAGE = 'coin.png'
     SPRITE_GROUPS = ["coins"]
+
+    def collide(self, colliding_objects):
+        if any(isinstance(o, Player) for o in colliding_objects):
+            self.game.coins += 1
+            self.kill()
