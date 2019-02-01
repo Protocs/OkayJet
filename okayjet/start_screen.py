@@ -16,8 +16,6 @@ class Start:
         # Была ли игра начата?
         self.start = True
 
-        self.clock = pygame.time.Clock()
-
         self.background = load_image("start_background.png")
         self.start_button = load_image("press_somewhere_image.png")
         self.logo = load_image("logo.png")
@@ -26,7 +24,6 @@ class Start:
         while self.start:
             self.events()
             self.update()
-            self.clock.tick(FPS)
 
     def events(self):
         for event in pygame.event.get():
@@ -36,7 +33,6 @@ class Start:
                 terminate()
 
     def update(self):
-        self.surface.fill((0, 0, 0))
         self.surface.blit(self.background, (0, 0))
         self.background.blit(self.start_button, (150, 400))
         self.background.blit(self.logo, (280, 75))
