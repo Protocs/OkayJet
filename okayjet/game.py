@@ -1,10 +1,9 @@
 import time
-import random
 
 import pygame
 
 from .util import load_image, terminate
-from .objects.coin import Coin, spawn_coin_group, load_random_group
+from .objects.coin import spawn_coin_group, load_random_group
 from .objects.player import Player
 from .settings import *
 
@@ -36,10 +35,8 @@ class Game:
     @property
     def slide_speed(self):
         """Скорость движения персонажа."""
-        timedelta = time.time() - self.start_time
-        if timedelta > 120:
-            return 9
-        return 3 + ((time.time() - self.start_time) * 0.05)
+        speed = min((time.time() - self.start_time) * SPEED_COEFFICIENT, MAX_SPEED)
+        return START_SPEED + speed
 
     @property
     def intro(self):

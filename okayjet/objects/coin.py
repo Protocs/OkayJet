@@ -1,8 +1,6 @@
 import random
 import os
 
-import pygame
-
 from .collidable import Collidable
 from .player import Player
 from ..settings import SCREEN_WIDTH, SCREEN_HEIGHT, COIN_DISTANCE
