@@ -5,6 +5,18 @@ from ..util import load_image
 
 
 class GameObject(Sprite):
+    """Базовый класс всех игровых обьектов.
+    
+    Наследующие классы должны определять атрибут класса
+    IMAGE, содержащий путь к изображению обьекта.
+
+    Все обьекты наследующих классов автоматически 
+    добавляются в группу спрайтов 
+    Game.sprite_groups['all'].
+    Необязательный атрибут класса SPRITE_GROUPS - список
+    с названиями дополнительных групп спрайтов.
+    """
+
     SPRITE_GROUPS = []
 
     def __init__(self, game, pos):
@@ -20,3 +32,4 @@ class GameObject(Sprite):
 
     def move(self, dx, dy):
         self.rect = self.rect.move(dx, dy)
+

@@ -4,6 +4,11 @@ from .settings import FPS
 
 
 class Start:
+    """
+    Начальная заставка с логотипом
+    и приглашением к игре.
+    """
+
     def __init__(self, surface):
         self.surface = surface
 

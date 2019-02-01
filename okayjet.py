@@ -12,3 +12,4 @@ start = Start(screen)
 start.run()
 game = Game(screen)
 game.run()
+

@@ -10,6 +10,8 @@ import random
 
 
 class Game:
+    """Главный класс игры."""
+    
     def __init__(self, surface):
         self.surface = surface
 
@@ -32,10 +34,16 @@ class Game:
 
     @property
     def slide_speed(self):
+        """Скорость движения персонажа."""
         return 3 + ((time.time() - self.start_time) * 0.05)
 
     @property
     def intro(self):
+        """
+        Идёт ли сейчас анимация начала игры
+        (персонаж выбегает из левой части экрана 
+        без прокрутки фона)?
+        """
         return self.player.rect.x > SCREEN_WIDTH // 4
 
     @property
@@ -72,6 +80,7 @@ class Game:
         pygame.display.flip()
 
     def update_background(self):
+        """Осуществляет прокрутку фона.""" 
         x = self.background_x % self.background_width
         self.surface.blit(self.background, (x - self.background_width, 0))
         if x < SCREEN_WIDTH:
@@ -84,3 +93,4 @@ class Game:
 
         if pressed[pygame.K_SPACE] and self.player.rect.y >= 0:
             self.player.move(0, -5.5)
+
