@@ -7,7 +7,8 @@ from ..settings import SCREEN_WIDTH, SCREEN_HEIGHT, COIN_DISTANCE
 
 
 def load_random_group():
-    files = os.listdir("data/coin_groups")
+    files = list(filter(lambda f: f.endswith(".txt") and f.startswith("group"),
+                        os.listdir("data/coin_groups")))
     with open("data/coin_groups/group{}.txt".format(str(random.randint(1, len(files))))) as file:
         return file.readlines()
 
