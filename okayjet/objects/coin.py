@@ -1,9 +1,9 @@
 import random
 import os
 
-from .collidable import Collidable
 from .player import Player
-from ..settings import SCREEN_WIDTH, SCREEN_HEIGHT, COIN_DISTANCE, COIN_HEIGHT, BOTTOM_BORDER
+from ..settings import SCREEN_WIDTH, COIN_DISTANCE, COIN_HEIGHT, BOTTOM_BORDER
+from .animated_sprite import AnimatedSprite
 
 
 def load_random_group():
@@ -20,12 +20,11 @@ def spawn_coin_group(game, group):
     for i in range(len(group)):
         for j in range(len(group[i].rstrip())):
             if group[i].rstrip()[j] == "*":
-                Coin(game, (left + COIN_DISTANCE * j,
-                            top + COIN_DISTANCE * i))
+                Coin(game, (left + COIN_DISTANCE * j, top + COIN_DISTANCE * i), 7, 1)
 
 
-class Coin(Collidable):
-    IMAGE = 'coin.png'
+class Coin(AnimatedSprite):
+    IMAGE = 'animated_coin.png'
     SPRITE_GROUPS = ["coins"]
 
     def collide(self, colliding_objects):
