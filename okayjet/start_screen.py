@@ -20,6 +20,9 @@ class Start:
         self.start_button = load_image("press_somewhere_image.png")
         self.logo = load_image("logo.png")
 
+        pygame.mixer.music.load("data/music/start.mp3")
+        pygame.mixer.music.play(-1)
+
     def run(self):
         while self.start:
             self.events()
