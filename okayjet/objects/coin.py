@@ -1,6 +1,8 @@
 import random
 import os
 
+import pygame
+
 from .player import Player
 from ..settings import SCREEN_WIDTH, COIN_DISTANCE, COIN_HEIGHT, BOTTOM_BORDER
 from .animated_sprite import AnimatedSprite
@@ -26,8 +28,10 @@ def spawn_coin_group(game, group):
 class Coin(AnimatedSprite):
     IMAGE = 'animated_coin.png'
     SPRITE_GROUPS = ["coins"]
+    SOUND = "data/music/coin.wav"
 
     def collide(self, colliding_objects):
         if any(isinstance(o, Player) for o in colliding_objects):
             self.game.coins += 1
+            self.sound.play()
             self.kill()

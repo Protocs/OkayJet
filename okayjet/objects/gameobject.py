@@ -1,10 +1,9 @@
-from pygame.sprite import Sprite
-from pygame import Rect
+import pygame
 
 from ..util import load_image
 
 
-class GameObject(Sprite):
+class GameObject(pygame.sprite.Sprite):
     """Базовый класс всех игровых обьектов.
     
     Наследующие классы должны определять атрибут класса
@@ -26,6 +25,8 @@ class GameObject(Sprite):
 
         # noinspection PyUnresolvedReferences
         self.image = load_image(self.IMAGE)
+        if self.SOUND is not None:
+            self.sound = pygame.mixer.Sound(self.SOUND)
 
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = pos
