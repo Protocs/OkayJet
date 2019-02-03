@@ -3,14 +3,15 @@ import time
 import pygame
 
 from .util import load_image, terminate
-from .objects.coin import spawn_coin_group, load_random_group
+from .objects.coin import spawn_coin_structure, get_random_coin_structure
 from .objects.player import Player
 from .settings import *
+from .events import *
 
 
 class Game:
     """Главный класс игры."""
-    
+
     def __init__(self, surface):
         self.surface = surface
 
@@ -30,6 +31,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.player = Player(self, (30, 0))
+        # Собранные монеты
         self.coins = 0
 
     @property
@@ -42,7 +44,7 @@ class Game:
     def intro(self):
         """
         Идёт ли сейчас анимация начала игры
-        (персонаж выбегает из левой части экрана 
+        (персонаж выбегает из левой части экрана
         без прокрутки фона)?
         """
         return self.player.rect.x < SCREEN_WIDTH // 4
@@ -52,7 +54,7 @@ class Game:
         return abs(self.background_x)
 
     def run(self):
-        pygame.time.set_timer(*COIN_SPAWN_EVENT)
+        pygame.time.set_timer(*COIN_SPAWN)
         while self.game:
             self.events()
             self.update()
@@ -64,8 +66,8 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            elif event.type == COIN_SPAWN_EVENT[0]:
-                spawn_coin_group(self, load_random_group())
+            elif event.type == COIN_SPAWN.id:
+                spawn_coin_structure(self, get_random_coin_structure())
 
     def update(self):
         self.update_background()
@@ -74,7 +76,7 @@ class Game:
         pygame.display.flip()
 
     def update_background(self):
-        """Осуществляет прокрутку фона.""" 
+        """Осуществляет прокрутку фона."""
         x = self.background_x % self.background_width
         self.surface.blit(self.background, (x - self.background_width, 0))
         if x < SCREEN_WIDTH:
