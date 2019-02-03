@@ -6,7 +6,6 @@ from ..settings import BOTTOM_BORDER
 
 class Player(GameObject):
     IMAGE = "player.png"
-    SOUND = None
 
     def __init__(self, game, pos):
         super().__init__(game, pos)
