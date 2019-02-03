@@ -24,7 +24,6 @@ class Game:
 
         self.sprite_groups = {
             "all": pygame.sprite.Group(),
-            "coins": pygame.sprite.Group()
         }
 
         self.start_time = time.time()

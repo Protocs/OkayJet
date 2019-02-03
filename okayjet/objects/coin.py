@@ -8,21 +8,22 @@ from ..settings import SCREEN_WIDTH, COIN_DISTANCE, COIN_HEIGHT, BOTTOM_BORDER
 from .animated_sprite import AnimatedSprite
 
 
-def load_random_group():
-    files = list(filter(lambda f: f.endswith(".txt") and f.startswith("group"),
-                        os.listdir("data/coin_groups")))
-    with open("data/coin_groups/group{}.txt".format(str(random.randint(1, len(files))))) as file:
-        return file.readlines()
+def get_random_coin_structure():
+    coin_groups_dir_path = os.path.join('data', 'coin_groups')
+    random_group_file_path = os.path.join(coin_groups_dir_path, random.choice(os.listdir(coin_groups_dir_path)))
+    with open(random_group_file_path) as f:
+        return f.readlines()
 
 
-def spawn_coin_group(game, group):
-    left = random.randint(SCREEN_WIDTH, 2 * SCREEN_WIDTH - 100)
-    top = random.randint(0, BOTTOM_BORDER - ((len(group) - 1) * (COIN_DISTANCE - COIN_HEIGHT) +
-                                             len(group) * COIN_HEIGHT))
+# TODO: Предотвращать наложение структур
+def spawn_coin_structure(game, group):
+    x = random.randint(SCREEN_WIDTH, 2 * SCREEN_WIDTH - 100)
+    y = random.randint(0, BOTTOM_BORDER - ((len(group) - 1) * (COIN_DISTANCE - COIN_HEIGHT) +
+                                           len(group) * COIN_HEIGHT))
     for i in range(len(group)):
         for j in range(len(group[i].rstrip())):
             if group[i].rstrip()[j] == "*":
-                Coin(game, (left + COIN_DISTANCE * j, top + COIN_DISTANCE * i), 7, 1)
+                Coin(game, (x + COIN_DISTANCE * j, y + COIN_DISTANCE * i), 7, 1)
 
 
 class Coin(AnimatedSprite):
