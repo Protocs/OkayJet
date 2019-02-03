@@ -7,3 +7,5 @@ COIN_DISTANCE = 30  # расстояние между монетками
 START_SPEED = 3
 MAX_SPEED = 8
 SPEED_COEFFICIENT = 0.05
+BOTTOM_BORDER = 445 # ордината нижней границы, по которой бегает игрок
+COIN_HEIGHT = 20

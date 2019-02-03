@@ -3,7 +3,7 @@ import os
 
 from .collidable import Collidable
 from .player import Player
-from ..settings import SCREEN_WIDTH, SCREEN_HEIGHT, COIN_DISTANCE
+from ..settings import SCREEN_WIDTH, SCREEN_HEIGHT, COIN_DISTANCE, COIN_HEIGHT, BOTTOM_BORDER
 
 
 def load_random_group():
@@ -15,7 +15,8 @@ def load_random_group():
 
 def spawn_coin_group(game, group):
     left = random.randint(SCREEN_WIDTH, 2 * SCREEN_WIDTH - 100)
-    top = random.randint(0, SCREEN_HEIGHT - 200)
+    top = random.randint(0, BOTTOM_BORDER - ((len(group) - 1) * (COIN_DISTANCE - COIN_HEIGHT) +
+                                             len(group) * COIN_HEIGHT))
     for i in range(len(group)):
         for j in range(len(group[i].rstrip())):
             if group[i].rstrip()[j] == "*":

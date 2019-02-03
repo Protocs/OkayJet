@@ -29,7 +29,7 @@ class Game:
         self.start_time = time.time()
         self.clock = pygame.time.Clock()
 
-        self.player = Player(self, (30, 365))
+        self.player = Player(self, (30, 0))
         self.coins = 0
 
     @property
