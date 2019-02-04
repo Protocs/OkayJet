@@ -4,6 +4,7 @@ import pygame
 
 from .util import load_image, terminate
 from .objects.coin import spawn_coin_structure, get_random_coin_structure
+from .objects.coin_structure import CoinStructure
 from .objects.player import Player
 from .settings import *
 from .events import *
@@ -24,6 +25,7 @@ class Game:
 
         self.sprite_groups = {
             "all": pygame.sprite.Group(),
+            'coin_structure': pygame.sprite.Group(),
         }
 
         self.start_time = time.time()
@@ -66,7 +68,7 @@ class Game:
             if event.type == pygame.QUIT:
                 terminate()
             elif event.type == COIN_SPAWN.id:
-                spawn_coin_structure(self, get_random_coin_structure())
+                CoinStructure.random(self).spawn()
 
     def update(self):
         self.update_background()

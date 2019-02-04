@@ -16,6 +16,7 @@ class GameObject(pygame.sprite.Sprite):
     с названиями дополнительных групп спрайтов.
     """
 
+    IMAGE = None
     SPRITE_GROUPS = []
 
     def __init__(self, game, pos):
@@ -24,7 +25,10 @@ class GameObject(pygame.sprite.Sprite):
         self.game = game
 
         # noinspection PyUnresolvedReferences
-        self.image = load_image(self.IMAGE)
+        if self.IMAGE is None:
+            self.image = pygame.sprite.Surface((0, 0))
+        else:
+            self.image = load_image(self.IMAGE)
         if self.SOUND is not None:
             self.sound = pygame.mixer.Sound(self.SOUND)
 
@@ -33,4 +37,3 @@ class GameObject(pygame.sprite.Sprite):
 
     def move(self, dx, dy):
         self.rect = self.rect.move(dx, dy)
-
