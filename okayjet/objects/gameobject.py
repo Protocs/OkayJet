@@ -26,7 +26,7 @@ class GameObject(pygame.sprite.Sprite):
 
         # noinspection PyUnresolvedReferences
         if self.IMAGE is None:
-            self.image = pygame.sprite.Surface((0, 0))
+            self.image = pygame.Surface((0, 0))
         else:
             self.image = load_image(self.IMAGE)
 

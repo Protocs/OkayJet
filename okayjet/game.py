@@ -3,7 +3,6 @@ import time
 import pygame
 
 from .util import load_image, terminate
-from .objects.coin import spawn_coin_structure, get_random_coin_structure
 from .objects.coin_structure import CoinStructure
 from .objects.player import Player
 from .settings import *
