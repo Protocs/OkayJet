@@ -29,8 +29,6 @@ class GameObject(pygame.sprite.Sprite):
             self.image = pygame.sprite.Surface((0, 0))
         else:
             self.image = load_image(self.IMAGE)
-        if self.SOUND is not None:
-            self.sound = pygame.mixer.Sound(self.SOUND)
 
         self.rect = self.image.get_rect()
         self.rect.x, self.rect.y = pos
