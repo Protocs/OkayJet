@@ -13,11 +13,14 @@ def cut_sheet(sheet, columns, rows, rect):
 
 
 class AnimatedSprite(Collidable):
-    def __init__(self, game, pos, columns, rows):
+    COLUMNS = 1
+    ROWS = 1
+
+    def __init__(self, game, pos):
         super().__init__(game, pos)
-        self.rect = pygame.Rect(*pos, self.image.get_width() // columns,
-                                self.image.get_height() // rows)
-        self.frames = cut_sheet(self.image, columns, rows, self.rect)
+        self.rect = pygame.Rect(*pos, self.image.get_width() // self.COLUMNS,
+                                self.image.get_height() // self.ROWS)
+        self.frames = cut_sheet(self.image, self.COLUMNS, self.ROWS, self.rect)
         self.current_frame = 0
         self.image = self.frames[self.current_frame]
         self.next_frame = pygame.time.get_ticks()

@@ -90,4 +90,3 @@ class Game:
 
         if pressed[pygame.K_SPACE] and self.player.rect.y >= 0:
             self.player.move(0, -5.5)
-

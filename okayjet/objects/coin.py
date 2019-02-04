@@ -28,8 +28,12 @@ def spawn_coin_structure(game, group):
 
 class Coin(AnimatedSprite):
     IMAGE = 'animated_coin.png'
-    SPRITE_GROUPS = ["coins"]
     SOUND = "data/music/coin.wav"
+    COLUMNS = 7
+    ROWS = 1
+
+    def __init__(self, game, pos):
+        super().__init__(game, pos)
 
     def collide(self, colliding_objects):
         if any(isinstance(o, Player) for o in colliding_objects):
