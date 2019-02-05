@@ -35,17 +35,7 @@ class CoinStructure(XSlideObject):
         self.rect.w, self.rect.h = max_coins_along_x * COIN_DISTANCE, max_coins_along_y * COIN_DISTANCE
         # Наконец, ставим структуру в случайное место, раз на то пошло
         if pos == (0, 0):
-            self._set_random_pos()
-
-    def _set_random_pos(self):
-        self.rect.x = random.randint(SCREEN_WIDTH, 2 * SCREEN_WIDTH - 100)
-        self.rect.y = random.randint(0, SCREEN_HEIGHT - 250)
-        # Генерируем новые позиции до тех пор, пока мы налезаем на уже существующую структуру
-        while pygame.sprite.spritecollideany(self, self.game.sprite_groups['coin_structure']):
-            self.rect.x = random.randint(SCREEN_WIDTH, 2 * SCREEN_WIDTH - 100)
-            self.rect.y = random.randint(0, SCREEN_HEIGHT - 250)
-
-        self.game.sprite_groups['coin_structure'].add(self)
+            self.prepare_for_spawn()
 
     @staticmethod
     def random(game, pos=None):
