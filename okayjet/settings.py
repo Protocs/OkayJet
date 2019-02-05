@@ -1,3 +1,7 @@
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+
 GAME_NAME = 'OkayJet'
 
 FPS = 60

@@ -1,12 +1,16 @@
 import time
+import logging
 
 import pygame
 
+from okayjet.objects.obstacle import Obstacle
 from .util import load_image, terminate
 from .objects.coin_structure import CoinStructure
 from .objects.player import Player
 from .settings import *
 from .events import *
+
+_logger = logging.getLogger('okayjet.game')
 
 
 class Game:
@@ -58,7 +62,8 @@ class Game:
         return abs(self.background_x)
 
     def run(self):
-        pygame.time.set_timer(*COIN_SPAWN)
+        for event in ALL_EVENTS:
+            pygame.time.set_timer(*event)
         while self.game:
             self.events()
             self.update()
@@ -72,6 +77,9 @@ class Game:
                 terminate()
             elif event.type == COIN_SPAWN.id:
                 CoinStructure.random(self).spawn()
+            elif event.type == OBSTACLE_SPAWN.id:
+                _logger.debug('OBSTACLE_SPAWN event')
+                Obstacle(self)
 
     def update(self):
         self.update_background()
