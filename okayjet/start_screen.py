@@ -18,7 +18,6 @@ class Start:
         self.background = load_image("start_background.png")
         self.start_button = load_image("press_somewhere_image.png")
         self.logo = load_image("logo.png")
-        self.start_sound = pygame.mixer.Sound("data/music/play_sound.wav")
 
         pygame.mixer.music.load("data/music/start.mp3")
         pygame.mixer.music.play(-1)
@@ -31,7 +30,9 @@ class Start:
     def events(self):
         for event in pygame.event.get():
             if event.type in (pygame.MOUSEBUTTONUP, pygame.KEYUP):
-                self.start_sound.play()
+                for i in range(10, -1, -1):
+                    pygame.mixer.music.set_volume(i / 10)
+                    pygame.time.delay(20)
                 self.start = False
 
             elif event.type == pygame.QUIT:

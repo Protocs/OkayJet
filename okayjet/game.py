@@ -34,6 +34,10 @@ class Game:
         # Собранные монеты
         self.coins = 0
 
+        pygame.mixer.music.load("data/music/game.mp3")
+        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.play(-1)
+
     @property
     def slide_speed(self):
         """Скорость движения персонажа."""
