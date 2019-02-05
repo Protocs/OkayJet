@@ -1,6 +1,20 @@
 import pygame
 
 from .util import terminate, load_image
+from .objects.animated_sprite import AnimatedSprite
+
+
+class AnimatedStartButton(AnimatedSprite):
+    COLUMNS = 1
+    ROWS = 15
+    IMAGE = "press_somewhere_image.png"
+    FRAMES_CHANGING = 100
+
+    def update(self):
+        if pygame.time.get_ticks() > self.next_frame:
+            self.current_frame = (self.current_frame + 1) % len(self.frames)
+            self.image = self.frames[self.current_frame]
+            self.next_frame += 100
 
 
 class Start:
@@ -15,8 +29,10 @@ class Start:
         # Была ли игра начата?
         self.start = True
 
+        self.sprite_groups = {"all": pygame.sprite.Group()}
+
         self.background = load_image("start_background.png")
-        self.start_button = load_image("press_somewhere_image.png")
+        self.start_button = AnimatedStartButton(self, (150, 400))
         self.logo = load_image("logo.png")
 
         pygame.mixer.music.load("data/music/start.mp3")
@@ -40,6 +56,7 @@ class Start:
 
     def update(self):
         self.surface.blit(self.background, (0, 0))
-        self.background.blit(self.start_button, (150, 400))
+        self.sprite_groups["all"].update()
+        self.sprite_groups["all"].draw(self.surface)
         self.background.blit(self.logo, (280, 75))
         pygame.display.flip()

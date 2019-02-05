@@ -1,6 +1,5 @@
 import pygame
 from .collidable import Collidable
-from ..settings import FRAMES_CHANGING
 
 
 def cut_sheet(sheet, columns, rows, rect):
@@ -15,6 +14,7 @@ def cut_sheet(sheet, columns, rows, rect):
 class AnimatedSprite(Collidable):
     COLUMNS = 1
     ROWS = 1
+    FRAMES_CHANGING = 150
 
     def __init__(self, game, pos):
         super().__init__(game, pos)
@@ -31,4 +31,4 @@ class AnimatedSprite(Collidable):
         if pygame.time.get_ticks() > self.next_frame:
             self.current_frame = (self.current_frame + 1) % len(self.frames)
             self.image = self.frames[self.current_frame]
-            self.next_frame += FRAMES_CHANGING
+            self.next_frame += self.FRAMES_CHANGING
