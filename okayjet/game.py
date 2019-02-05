@@ -34,7 +34,7 @@ class Game:
         # Собранные монеты
         self.coins = 0
 
-        pygame.mixer.music.load("data/music/game.mp3")
+        pygame.mixer.music.load("data/music/game.wav")
         pygame.mixer.music.set_volume(1)
         pygame.mixer.music.play(-1)
 
