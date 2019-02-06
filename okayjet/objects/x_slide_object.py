@@ -12,7 +12,7 @@ class XSlideObject(GameObject):
     def update(self):
         if not self.game.intro:
             self.rect.x -= self.game.slide_speed
-            if self.rect.x < 0:
+            if self.rect.x < -SCREEN_WIDTH:
                 self.kill()
 
     def prepare_for_spawn(self):
