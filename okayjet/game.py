@@ -57,10 +57,6 @@ class Game:
         """
         return self.player.rect.x < SCREEN_WIDTH // 4
 
-    @property
-    def _background_x(self):
-        return abs(self.background_x)
-
     def run(self):
         for event in ALL_EVENTS:
             pygame.time.set_timer(*event)
