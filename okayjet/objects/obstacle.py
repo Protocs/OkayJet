@@ -13,11 +13,14 @@ def _get_random_obstacle_image_path():
     # Имена относительно data/images/obstacles/
     obstacles_images_filenames = os.listdir(obstacles_dir)
     # Имена относительно data/images/
-    obstacles_images_paths = [os.path.join('obstacles', filename) for filename in obstacles_images_filenames]
+    obstacles_images_paths = [os.path.join('obstacles', filename) for filename in
+                              obstacles_images_filenames]
     return random.choice(obstacles_images_paths)
 
 
 class Obstacle(Collidable):
+    SPRITE_GROUPS = ["obstacles"]
+
     def __init__(self, game, pos=(0, 0), image=None):
         if image is None:
             image = _get_random_obstacle_image_path()

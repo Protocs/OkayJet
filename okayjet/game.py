@@ -1,4 +1,3 @@
-import time
 import logging
 
 import pygame
@@ -7,6 +6,7 @@ from okayjet.objects.obstacle import Obstacle
 from .util import load_image, terminate
 from .objects.coin_structure import CoinStructure
 from .objects.player import Player
+from .objects.animated_sprite import AnimatedSprite
 from .settings import *
 from .events import *
 
@@ -21,6 +21,9 @@ class Game:
 
         # Идет ли игра?
         self.game = True
+        # Поставлена ли игра на паузу?
+        self.pause = False
+        self.pause_start = 0
 
         self.background = load_image("background.jpg")
         self.background_width = self.background.get_rect().width
@@ -29,9 +32,10 @@ class Game:
         self.sprite_groups = {
             "all": pygame.sprite.Group(),
             'coin_structure': pygame.sprite.Group(),
+            "obstacles": pygame.sprite.Group()
         }
 
-        self.start_time = time.time()
+        self.start_time = pygame.time.get_ticks()
         self.clock = pygame.time.Clock()
 
         self.player = Player(self, (30, 0))
@@ -45,8 +49,8 @@ class Game:
     @property
     def slide_speed(self):
         """Скорость движения персонажа."""
-        speed = min((time.time() - self.start_time) * SPEED_COEFFICIENT, MAX_SPEED)
-        return START_SPEED + speed
+        speed = min(pygame.time.get_ticks() * SPEED_COEFFICIENT / 1000, MAX_SPEED)
+        return int(START_SPEED + speed)
 
     @property
     def intro(self):
@@ -66,22 +70,32 @@ class Game:
             self.clock.tick(FPS)
 
     def events(self):
-        self.keypress_handler()
+        self.key_hold_handler()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 terminate()
-            elif event.type == COIN_SPAWN.id:
-                CoinStructure.random(self).spawn()
-            elif event.type == OBSTACLE_SPAWN.id:
-                _logger.debug('OBSTACLE_SPAWN event')
-                Obstacle(self)
+            elif event.type == pygame.KEYUP:
+                self.keypress_handler(event.key)
+            else:
+                self.game_events(event)
+
+    def game_events(self, event):
+        if self.pause:
+            return
+
+        if event.type == COIN_SPAWN.id:
+            CoinStructure.random(self).spawn()
+        elif event.type == OBSTACLE_SPAWN.id:
+            _logger.debug('OBSTACLE_SPAWN event')
+            Obstacle(self)
 
     def update(self):
-        self.update_background()
-        self.sprite_groups['all'].update()
-        self.sprite_groups['all'].draw(self.surface)
-        pygame.display.flip()
+        if not self.pause:
+            self.update_background()
+            self.sprite_groups['all'].update()
+            self.sprite_groups['all'].draw(self.surface)
+            pygame.display.flip()
 
     def update_background(self):
         """Осуществляет прокрутку фона."""
@@ -92,8 +106,32 @@ class Game:
         if not self.intro:
             self.background_x -= self.slide_speed
 
-    def keypress_handler(self):
-        pressed = pygame.key.get_pressed()
+    def key_hold_handler(self):
+        """Обработчик зажатых клавиш."""
+        if self.pause:
+            return
 
+        pressed = pygame.key.get_pressed()
         if pressed[pygame.K_SPACE] and self.player.rect.y >= 0:
             self.player.rect.y = max(self.player.rect.y - 5.5, 0)
+
+    def keypress_handler(self, key):
+        if key == pygame.K_ESCAPE:
+            if self.pause:
+                self.unpause()
+            else:
+                self.set_pause()
+
+    def unpause(self):
+        self.pause = False
+        pygame.mixer.music.unpause()
+        pause_time = pygame.time.get_ticks() - self.pause_start
+        self.start_time += pause_time
+        for sprite in self.sprite_groups["all"]:
+            if isinstance(sprite, AnimatedSprite):
+                sprite.next_frame += pause_time
+
+    def set_pause(self):
+        self.pause = True
+        pygame.mixer.music.pause()
+        self.pause_start = pygame.time.get_ticks()
