@@ -8,13 +8,13 @@ class AnimatedStartButton(AnimatedSprite):
     COLUMNS = 1
     ROWS = 15
     IMAGE = "press_somewhere_image.png"
-    FRAMES_CHANGING = 100
+    FRAMES_CHANGING = 85
 
     def update(self):
         if pygame.time.get_ticks() > self.next_frame:
             self.current_frame = (self.current_frame + 1) % len(self.frames)
             self.image = self.frames[self.current_frame]
-            self.next_frame += 100
+            self.next_frame += self.FRAMES_CHANGING
 
 
 class Start:
