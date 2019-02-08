@@ -43,7 +43,7 @@ class Game:
         self.coins = 0
 
         pygame.mixer.music.load("data/music/game.wav")
-        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.set_volume(MUSIC_VOLUME)
         pygame.mixer.music.play(-1)
 
     @property
