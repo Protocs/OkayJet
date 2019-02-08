@@ -49,8 +49,9 @@ class Game:
     @property
     def slide_speed(self):
         """Скорость движения персонажа."""
-        speed = min((pygame.time.get_ticks() - self.start_time) * SPEED_COEFFICIENT / 1000, MAX_SPEED)
-        return int(START_SPEED + speed)
+        speed = min((pygame.time.get_ticks() - self.start_time) * SPEED_COEFFICIENT / 1000,
+                    MAX_SPEED)
+        return START_SPEED + speed
 
     @property
     def intro(self):
