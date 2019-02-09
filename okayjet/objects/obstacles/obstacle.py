@@ -2,6 +2,8 @@ import os
 import random
 import logging
 
+import pygame
+
 from ..player import Player
 from ..collidable import Collidable
 
@@ -26,6 +28,7 @@ class Obstacle(Collidable):
             image = _get_random_obstacle_image_path()
 
         self.IMAGE = image
+        self.start_time = pygame.time.get_ticks()
 
         super().__init__(game, pos)
 

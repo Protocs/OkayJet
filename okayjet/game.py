@@ -9,6 +9,7 @@ from .objects.player import Player
 from .objects.animated_sprite import AnimatedSprite
 from .objects.coin_counter import CoinCounter
 from .objects.obstacles import OBSTACLES
+from .objects.obstacles.obstacle import Obstacle
 from .settings import *
 from .events import *
 
@@ -134,6 +135,8 @@ class Game:
         for sprite in self.sprite_groups["all"]:
             if isinstance(sprite, AnimatedSprite):
                 sprite.next_frame += pause_time
+            if isinstance(sprite, Obstacle):
+                sprite.start_time += pause_time
 
     def set_pause(self):
         self.pause = True
