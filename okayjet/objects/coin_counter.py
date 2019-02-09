@@ -11,5 +11,5 @@ class CoinCounter(GameObject):
         self.image = pygame.Surface((100, 100))
 
     def update(self):
-        font = pygame.font.Font(pygame.font.get_default_font(), 16)
+        font = pygame.font.Font("data/fonts/freesansbold.ttf", 16)
         self.image = font.render(f'Монеты: {self.game.coins}', True, (0, 0, 0))
