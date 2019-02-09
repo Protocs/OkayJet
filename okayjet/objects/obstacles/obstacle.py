@@ -2,8 +2,8 @@ import os
 import random
 import logging
 
-from .player import Player
-from .collidable import Collidable
+from ..player import Player
+from ..collidable import Collidable
 
 _logger = logging.getLogger('okayjet.objects.obstacle')
 

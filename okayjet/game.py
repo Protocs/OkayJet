@@ -1,4 +1,5 @@
 import logging
+import random
 
 import pygame
 
@@ -7,7 +8,7 @@ from .objects.coin_structure import CoinStructure
 from .objects.player import Player
 from .objects.animated_sprite import AnimatedSprite
 from .objects.coin_counter import CoinCounter
-from .objects.obstacle import Obstacle
+from .objects.obstacles import OBSTACLES
 from .settings import *
 from .events import *
 
@@ -91,7 +92,7 @@ class Game:
             CoinStructure.random(self).spawn()
         elif event.type == OBSTACLE_SPAWN.id:
             _logger.debug('OBSTACLE_SPAWN event')
-            Obstacle(self)
+            random.choice(OBSTACLES)(self, (SCREEN_WIDTH - 100, random.randint(0, SCREEN_HEIGHT)))
 
     def update(self):
         if not self.pause:
