@@ -18,8 +18,10 @@ class Rocket(Obstacle):
         if random.randint(1, 2) == 1:
             if len(list(filter(lambda o: isinstance(o, Rocket),
                                self.game.sprite_groups["obstacles"].sprites()))) < 3:
-                Rocket(self.game, (SCREEN_WIDTH - 30, random.randint(0, SCREEN_HEIGHT)),
-                       random.randint(100, 1000))
+                x, y = (SCREEN_WIDTH - 30, random.randint(0, SCREEN_HEIGHT))
+                while pygame.Rect(x, y, self.rect.w, self.rect.h).colliderect(self.rect):
+                    x, y = (SCREEN_WIDTH - 30, random.randint(0, SCREEN_HEIGHT))
+                Rocket(self.game, (x, y), random.randint(100, 1000))
 
     def update(self):
         if self.delay_before_spawn:
@@ -32,6 +34,10 @@ class Rocket(Obstacle):
         if self.moving:
             self.rect = self.rect.move(random.randrange(3) - 1 - self.SPEED, random.randrange(3) - 1)
             super().update()
+        else:
+            self.rect = self.rect.move(random.randrange(3) - 1, random.randrange(3) - 1)
+            if self.rect.x >= SCREEN_WIDTH:
+                self.rect.x -= 1
 
     def activate_rocket(self):
         self.moving = True
