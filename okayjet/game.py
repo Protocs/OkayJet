@@ -93,7 +93,7 @@ class Game:
             CoinStructure.random(self).spawn()
         elif event.type == OBSTACLE_SPAWN.id:
             _logger.debug('OBSTACLE_SPAWN event')
-            random.choice(OBSTACLES)(self, (SCREEN_WIDTH - 100, random.randint(0, SCREEN_HEIGHT)))
+            random.choice(OBSTACLES)(self, (SCREEN_WIDTH - 30, random.randint(0, SCREEN_HEIGHT)))
 
     def update(self):
         if not self.pause:
