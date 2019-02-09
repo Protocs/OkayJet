@@ -2,11 +2,12 @@ import logging
 
 import pygame
 
-from okayjet.objects.obstacle import Obstacle
 from .util import load_image, terminate
 from .objects.coin_structure import CoinStructure
 from .objects.player import Player
 from .objects.animated_sprite import AnimatedSprite
+from .objects.coin_counter import CoinCounter
+from .objects.obstacle import Obstacle
 from .settings import *
 from .events import *
 
@@ -41,6 +42,7 @@ class Game:
         self.player = Player(self, (30, 0))
         # Собранные монеты
         self.coins = 0
+        self.coin_counter = CoinCounter(self)
 
         pygame.mixer.music.load("data/music/game.wav")
         pygame.mixer.music.set_volume(MUSIC_VOLUME)
