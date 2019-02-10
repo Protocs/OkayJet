@@ -49,7 +49,7 @@ class Pause:
         if pygame.Rect(*self.resume[1], *self.resume[0].get_rect().size).collidepoint(*pos):
             self.resume = self.resume_images[1]
             if mouse_pressed:
-                self.game.pause = False
+                self.game.unpause()
         else:
             self.resume = self.resume_images[0]
 
