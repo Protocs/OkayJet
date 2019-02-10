@@ -9,8 +9,8 @@ pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=4096)
 screen = pygame.display.set_mode(SCREEN_SIZE)
 pygame.display.set_caption(GAME_NAME)
 
-start = Start(screen)
-start.run()
-game = Game(screen)
-game.run()
-
+while True:
+    start = Start(screen)
+    start.run()
+    game = Game(screen)
+    game.run()

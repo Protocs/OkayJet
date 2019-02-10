@@ -4,6 +4,7 @@ import random
 import pygame
 
 from .util import load_image, terminate
+from .pause_screen import Pause
 from .objects.coin_structure import CoinStructure
 from .objects.player import Player
 from .objects.animated_sprite import AnimatedSprite
@@ -142,3 +143,4 @@ class Game:
         self.pause = True
         pygame.mixer.music.pause()
         self.pause_start = pygame.time.get_ticks()
+        Pause(self)

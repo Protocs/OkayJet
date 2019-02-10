@@ -2,6 +2,7 @@ import pygame
 
 from .util import terminate, load_image
 from .objects.animated_sprite import AnimatedSprite
+from .settings import MUSIC_VOLUME
 
 
 class AnimatedStartButton(AnimatedSprite):
@@ -37,6 +38,7 @@ class Start:
 
         pygame.mixer.music.load("data/music/start.mp3")
         pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(MUSIC_VOLUME)
 
     def run(self):
         while self.start:
@@ -45,8 +47,8 @@ class Start:
 
     def events(self):
         for event in pygame.event.get():
-            if event.type in (pygame.MOUSEBUTTONUP, pygame.KEYUP):
-                for i in range(10, -1, -1):
+            if event.type == pygame.KEYUP:
+                for i in range(int(MUSIC_VOLUME * 10), -1, -1):
                     pygame.mixer.music.set_volume(i / 10)
                     pygame.time.delay(20)
                 self.start = False
