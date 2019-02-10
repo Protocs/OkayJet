@@ -7,9 +7,9 @@ class CoinCounter(GameObject):
     """Счетчик собранных монет."""
 
     def __init__(self, game):
-        super().__init__(game, (10, 10))
+        super().__init__(game, (40, 13))
+        self.font = pygame.font.Font("data/fonts/PressStart2P.ttf", 16)
         self.image = pygame.Surface((100, 100))
 
     def update(self):
-        font = pygame.font.Font("data/fonts/freesansbold.ttf", 16)
-        self.image = font.render(f'Монеты: {self.game.coins}', True, (0, 0, 0))
+        self.image = self.font.render(str(self.game.coins), True, (255, 188, 0))

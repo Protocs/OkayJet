@@ -46,6 +46,7 @@ class Game:
         # Собранные монеты
         self.coins = 0
         self.coin_counter = CoinCounter(self)
+        self.coin_image = load_image("animated_coin.png").subsurface(pygame.Rect(0, 0, 20, 20))
 
         pygame.mixer.music.load("data/music/game.wav")
         pygame.mixer.music.set_volume(MUSIC_VOLUME)
@@ -111,6 +112,7 @@ class Game:
             self.surface.blit(self.background, (x, 0))
         if not self.intro:
             self.background_x -= self.slide_speed
+        self.surface.blit(self.coin_image, (10, 10))
 
     def key_hold_handler(self):
         """Обработчик зажатых клавиш."""
