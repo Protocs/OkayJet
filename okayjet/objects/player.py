@@ -1,12 +1,14 @@
 import pygame
 
-from .gameobject import GameObject
+from .animated_sprite import AnimatedSprite
 from ..settings import BOTTOM_BORDER
 from ..death_screen import Death
 
 
-class Player(GameObject):
+class Player(AnimatedSprite):
     IMAGE = "player.png"
+    COLUMNS = 11
+    FRAMES_CHANGING = 80
 
     def __init__(self, game, pos):
         super().__init__(game, pos)
@@ -26,8 +28,21 @@ class Player(GameObject):
             self.rect = self.rect.move(3, 0)
 
         space_bar_pressed = pygame.key.get_pressed()[pygame.K_SPACE]
-        if self.rect.y < (BOTTOM_BORDER - self.rect.height) and not space_bar_pressed:
-            self.rect.y = min((self.rect.y + (3 * self.speedup)), BOTTOM_BORDER - self.rect.height)
-            self.speedup += 0.05
-        elif space_bar_pressed:
+
+        if space_bar_pressed:
+            self.change_frame(len(self.frames) - 1)
             self.speedup = 0.1
+        else:
+            if pygame.time.get_ticks() > self.next_frame:
+                self.change_frame((self.current_frame + 1) % (len(self.frames) - 1))
+                self.next_frame += self.FRAMES_CHANGING
+
+            if self.rect.y < (BOTTOM_BORDER - self.rect.height):
+                self.change_frame(0)
+                self.rect.y = min((self.rect.y + (3 * self.speedup)),
+                                  BOTTOM_BORDER - self.rect.height)
+                self.speedup += 0.05
+
+    def change_frame(self, frame):
+        self.current_frame = frame
+        self.image = self.frames[self.current_frame]
