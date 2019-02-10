@@ -2,6 +2,7 @@ import pygame
 
 from .gameobject import GameObject
 from ..settings import BOTTOM_BORDER
+from ..death_screen import Death
 
 
 class Player(GameObject):
@@ -14,6 +15,11 @@ class Player(GameObject):
 
         # Ускорение свободного падения
         self.speedup = 0.1
+
+    def kill(self):
+        super().kill()
+        self.game.game = False
+        Death(self.game)
 
     def update(self):
         if self.game.intro:
