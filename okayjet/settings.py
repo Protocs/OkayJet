@@ -14,5 +14,5 @@ BOTTOM_BORDER = 440  # ордината нижней границы, по кот
 COIN_HEIGHT = 20
 
 MUSIC_VOLUME = 0.5
-PIXELS_PER_METER = 3780
+PIXELS_PER_METER = 37.8
 BEST_PROGRESS_PATH = "best_progress.okj"

@@ -1,7 +1,7 @@
 import pygame
 
 from .animated_sprite import AnimatedSprite
-from ..settings import BOTTOM_BORDER
+from ..settings import BOTTOM_BORDER, START_SPEED
 from ..death_screen import Death
 from ..util import save_progress
 
@@ -9,7 +9,10 @@ from ..util import save_progress
 class Player(AnimatedSprite):
     IMAGE = "player.png"
     COLUMNS = 11
-    FRAMES_CHANGING = 80
+
+    @property
+    def frames_changing(self):
+        return 80 - (self.game.slide_speed - START_SPEED) * 8
 
     def __init__(self, game, pos):
         super().__init__(game, pos)
@@ -38,7 +41,7 @@ class Player(AnimatedSprite):
         else:
             if pygame.time.get_ticks() > self.next_frame:
                 self.change_frame((self.current_frame + 1) % (len(self.frames) - 1))
-                self.next_frame += self.FRAMES_CHANGING
+                self.next_frame += self.frames_changing
 
             if self.rect.y < (BOTTOM_BORDER - self.rect.height):
                 self.change_frame(0)
