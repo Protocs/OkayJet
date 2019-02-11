@@ -2,7 +2,11 @@ from .obstacle import Obstacle
 from ...util import load_image
 import pygame
 import random
-from ...settings import SCREEN_WIDTH, SCREEN_HEIGHT
+from ...settings import SCREEN_WIDTH, BOTTOM_BORDER
+
+
+def get_random_pos(h):
+    return SCREEN_WIDTH - 30, random.randint(0, BOTTOM_BORDER - h)
 
 
 class Rocket(Obstacle):
@@ -13,14 +17,17 @@ class Rocket(Obstacle):
 
     def __init__(self, game, pos=(0, 0), delay_before_spawn=0):
         super().__init__(game, pos, self.PREPARING_IMAGE)
+        if pos == (0, 0):
+            self.rect.topleft = get_random_pos(self.rect.h)
+        self.start_y = self.rect.y
         self.moving = False
         self.delay_before_spawn = delay_before_spawn
         if random.randint(1, 2) == 1:
             if len(list(filter(lambda o: isinstance(o, Rocket),
                                self.game.sprite_groups["obstacles"].sprites()))) < 3:
-                x, y = (SCREEN_WIDTH - 30, random.randint(0, SCREEN_HEIGHT))
+                x, y = get_random_pos(self.rect.h)
                 while pygame.Rect(x, y, self.rect.w, self.rect.h).colliderect(self.rect):
-                    x, y = (SCREEN_WIDTH - 30, random.randint(0, SCREEN_HEIGHT))
+                    x, y = get_random_pos(self.rect.h)
                 Rocket(self.game, (x, y), random.randint(100, 1000))
 
     def update(self):
@@ -36,12 +43,18 @@ class Rocket(Obstacle):
             super().update()
         else:
             self.rect = self.rect.move(random.randrange(3) - 1, random.randrange(3) - 1)
-            if self.rect.x >= SCREEN_WIDTH:
+            if self.rect.x > SCREEN_WIDTH - 28:
                 self.rect.x -= 1
+            elif self.rect.x < 968:
+                self.rect.x += 1
+            if self.rect.y > self.start_y + 2:
+                self.rect.y -= 1
+            elif self.rect.y < self.start_y - 2:
+                self.rect.y += 1
 
     def activate_rocket(self):
         self.moving = True
-        x, y = self.rect.x, self.rect.y
+        y = self.rect.y
         self.image = load_image(self.ROCKET_IMAGE)
         self.rect = self.image.get_rect()
         self.rect.x = SCREEN_WIDTH + 10
