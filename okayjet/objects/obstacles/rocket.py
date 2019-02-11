@@ -14,7 +14,7 @@ class Rocket(Obstacle):
     PREPARING_IMAGE = "obstacles/znak.png"
     PREPARING_TIME = 2000
     SPEED = 10
-    SPRITE_GROUPS = ["rockets"]
+    SPRITE_GROUPS = ["rockets", "obstacles"]
 
     def __init__(self, game, pos=(0, 0), delay_before_spawn=0):
         super().__init__(game, pos, self.PREPARING_IMAGE)

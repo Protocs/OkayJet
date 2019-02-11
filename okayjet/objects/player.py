@@ -45,7 +45,16 @@ class Player(AnimatedSprite):
                 self.rect.y = min((self.rect.y + (3 * self.speedup)),
                                   BOTTOM_BORDER - self.rect.height)
                 self.speedup += 0.05
+        self.find_colliding()
 
     def change_frame(self, frame):
         self.current_frame = frame
         self.image = self.frames[self.current_frame]
+
+    def find_colliding(self):
+        for obstacle in self.game.sprite_groups["obstacles"]:
+            if pygame.sprite.collide_mask(self, obstacle):
+                self.kill()
+        for coin in self.game.sprite_groups["coin_structure"]:
+            if pygame.sprite.collide_mask(self, coin):
+                coin.collide()

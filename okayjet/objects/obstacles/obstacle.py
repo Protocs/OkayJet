@@ -5,7 +5,8 @@ import logging
 import pygame
 
 from ..player import Player
-from ..collidable import Collidable
+# from ..collidable import Collidable
+from ..x_slide_object import XSlideObject
 
 _logger = logging.getLogger('okayjet.objects.obstacle')
 
@@ -20,7 +21,7 @@ def _get_random_obstacle_image_path():
     return random.choice(obstacles_images_paths)
 
 
-class Obstacle(Collidable):
+class Obstacle(XSlideObject):
     SPRITE_GROUPS = ["obstacles"]
 
     def __init__(self, game, pos=(0, 0), image=None):

@@ -7,7 +7,7 @@ import pygame
 
 class YellowLaser(Obstacle):
     IMAGE = "obstacles/yellow_laser.png"
-    SPRITE_GROUPS = ["yellow_lasers"]
+    SPRITE_GROUPS = ["yellow_lasers", "obstacles"]
     FRAMES_CHANGING = 40
 
     def __init__(self, game, pos=(0, 0)):
