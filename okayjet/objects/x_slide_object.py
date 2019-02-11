@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-from ..settings import SCREEN_WIDTH, SCREEN_HEIGHT
+from ..settings import SCREEN_WIDTH, BOTTOM_BORDER
 from .gameobject import GameObject
 
 
@@ -23,13 +23,13 @@ class XSlideObject(GameObject):
         self.kill()
 
         self.rect.x = random.randint(SCREEN_WIDTH, 2 * SCREEN_WIDTH - 100)
-        self.rect.y = random.randint(0, SCREEN_HEIGHT - 250)
+        self.rect.y = random.randint(0, BOTTOM_BORDER - self.rect.h)
         # Генерируем новые позиции до тех пор, пока мы налезаем на уже существующий обьект
         while pygame.sprite.spritecollideany(self, self.game.sprite_groups['all']):
             self.rect.x = random.randint(SCREEN_WIDTH, 2 * SCREEN_WIDTH - 100)
-            self.rect.y = random.randint(0, SCREEN_HEIGHT - 250)
+            self.rect.y = random.randint(0, BOTTOM_BORDER - self.rect.h)
 
         # Возвращаем себя обратно в группы
-        self.add(*(group for name, group in self.game.sprite_groups.items() if name in self.SPRITE_GROUPS),
+        self.add(*(group for name, group in self.game.sprite_groups.items() if
+                   name in self.SPRITE_GROUPS),
                  self.game.sprite_groups['all'])
-

@@ -10,6 +10,7 @@ from .objects.player import Player
 from .objects.animated_sprite import AnimatedSprite
 from .objects.coin_counter import CoinCounter
 from .objects.metres_counter import MetresCounter
+from .objects.obstacles.yellow_laser import YellowLaser
 from .objects.obstacles import OBSTACLES
 from .objects.obstacles.obstacle import Obstacle
 from .settings import *
@@ -38,7 +39,8 @@ class Game:
             "all": pygame.sprite.Group(),
             'coin_structure': pygame.sprite.Group(),
             "obstacles": pygame.sprite.Group(),
-            "rockets": pygame.sprite.Group()
+            "rockets": pygame.sprite.Group(),
+            "yellow_lasers": pygame.sprite.Group()
         }
 
         self.start_time = pygame.time.get_ticks()
