@@ -3,6 +3,7 @@ import pygame
 from .animated_sprite import AnimatedSprite
 from ..settings import BOTTOM_BORDER
 from ..death_screen import Death
+from ..util import load_best_progress, save_progress
 
 
 class Player(AnimatedSprite):
@@ -21,6 +22,8 @@ class Player(AnimatedSprite):
     def kill(self):
         super().kill()
         self.game.game = False
+        if self.game.metres > self.game.best_progress:
+            save_progress(self.game.metres)
         Death(self.game)
 
     def update(self):

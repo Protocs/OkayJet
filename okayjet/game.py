@@ -3,12 +3,13 @@ import random
 
 import pygame
 
-from .util import load_image, terminate
+from .util import load_image, terminate, load_best_progress
 from .pause_screen import Pause
 from .objects.coin_structure import CoinStructure
 from .objects.player import Player
 from .objects.animated_sprite import AnimatedSprite
 from .objects.coin_counter import CoinCounter
+from .objects.metres_counter import MetresCounter
 from .objects.obstacles import OBSTACLES
 from .objects.obstacles.obstacle import Obstacle
 from .settings import *
@@ -47,6 +48,11 @@ class Game:
         self.coins = 0
         self.coin_counter = CoinCounter(self)
         self.coin_image = load_image("animated_coin.png").subsurface(pygame.Rect(0, 0, 20, 20))
+        # Пройденное расстояние
+        self.metres_counter = MetresCounter(self)
+        self.best_progress = load_best_progress()
+        if self.best_progress is None:
+            self.best_progress = 0
 
         pygame.mixer.music.load("data/music/game.wav")
         pygame.mixer.music.set_volume(MUSIC_VOLUME)
@@ -67,6 +73,10 @@ class Game:
         без прокрутки фона)?
         """
         return self.player.rect.x < SCREEN_WIDTH // 4
+
+    @property
+    def metres(self):
+        return int(abs(self.background_x) // PIXELS_PER_METER)
 
     def run(self):
         for event in ALL_EVENTS:
