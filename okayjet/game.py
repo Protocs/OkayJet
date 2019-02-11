@@ -37,7 +37,8 @@ class Game:
         self.sprite_groups = {
             "all": pygame.sprite.Group(),
             'coin_structure': pygame.sprite.Group(),
-            "obstacles": pygame.sprite.Group()
+            "obstacles": pygame.sprite.Group(),
+            "rockets": pygame.sprite.Group()
         }
 
         self.start_time = pygame.time.get_ticks()

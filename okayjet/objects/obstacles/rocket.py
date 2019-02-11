@@ -14,6 +14,7 @@ class Rocket(Obstacle):
     PREPARING_IMAGE = "obstacles/znak.png"
     PREPARING_TIME = 2000
     SPEED = 10
+    SPRITE_GROUPS = ["rockets"]
 
     def __init__(self, game, pos=(0, 0), delay_before_spawn=0):
         super().__init__(game, pos, self.PREPARING_IMAGE)
@@ -23,11 +24,14 @@ class Rocket(Obstacle):
         self.moving = False
         self.delay_before_spawn = delay_before_spawn
         if random.randint(1, 2) == 1:
-            if len(list(filter(lambda o: isinstance(o, Rocket),
-                               self.game.sprite_groups["obstacles"].sprites()))) < 3:
+            if len(list(self.game.sprite_groups["rockets"].sprites())) < 3:
                 x, y = get_random_pos(self.rect.h)
-                while pygame.Rect(x, y, self.rect.w, self.rect.h).colliderect(self.rect):
-                    x, y = get_random_pos(self.rect.h)
+                while True:
+                    if any(pygame.Rect(x, y, self.rect.w, self.rect.h).colliderect(o.rect)
+                           for o in self.game.sprite_groups["rockets"]):
+                        x, y = get_random_pos(self.rect.h)
+                        continue
+                    break
                 Rocket(self.game, (x, y), random.randint(100, 1000))
 
     def update(self):
