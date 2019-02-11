@@ -1,9 +1,10 @@
 import pygame
 
+from .x_slide_object import XSlideObject
 from .animated_sprite import AnimatedSprite
 
 
-class Coin(AnimatedSprite):
+class Coin(AnimatedSprite, XSlideObject):
     IMAGE = 'animated_coin.png'
     COLUMNS = 7
     ROWS = 1

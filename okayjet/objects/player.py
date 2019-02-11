@@ -3,7 +3,7 @@ import pygame
 from .animated_sprite import AnimatedSprite
 from ..settings import BOTTOM_BORDER
 from ..death_screen import Death
-from ..util import load_best_progress, save_progress
+from ..util import save_progress
 
 
 class Player(AnimatedSprite):

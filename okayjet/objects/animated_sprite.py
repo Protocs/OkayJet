@@ -1,6 +1,7 @@
 import pygame
-# from .collidable import Collidable
-from .x_slide_object import XSlideObject
+
+from .gameobject import GameObject
+
 
 def cut_sheet(sheet, columns, rows, rect):
     frames = []
@@ -11,7 +12,7 @@ def cut_sheet(sheet, columns, rows, rect):
     return frames
 
 
-class AnimatedSprite(XSlideObject):
+class AnimatedSprite(GameObject):
     COLUMNS = 1
     ROWS = 1
     FRAMES_CHANGING = 150
