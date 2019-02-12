@@ -61,6 +61,8 @@ class Game:
         self.extra_life_image = load_image("extra_life.png")
         self.extra_lives_counter = ExtraLivesCounter(self)
 
+        self.music = music
+
         pygame.mixer.music.load("data/music/game.wav")
         pygame.mixer.music.set_volume(MUSIC_VOLUME)
 
@@ -168,3 +170,8 @@ class Game:
         pygame.mixer.music.pause()
         self.pause_start = pygame.time.get_ticks()
         Pause(self)
+
+    def restart(self):
+        self.__init__(self.surface, self.music)
+
+
