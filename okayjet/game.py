@@ -69,6 +69,9 @@ class Game:
         if music:
             pygame.mixer.music.play(-1)
 
+        for event in ALL_EVENTS:
+            pygame.time.set_timer(*event)
+
     @property
     def slide_speed(self):
         """Скорость движения персонажа."""
@@ -90,8 +93,6 @@ class Game:
         return int(abs(self.background_x) // PIXELS_PER_METER)
 
     def run(self):
-        for event in ALL_EVENTS:
-            pygame.time.set_timer(*event)
         while self.game:
             self.events()
             self.update()
