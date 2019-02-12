@@ -23,7 +23,8 @@ class MetresCounter(GameObject):
         super().__init__(game, (10, 44))
         self.font = pygame.font.Font("data/fonts/PressStart2P.ttf", 16)
         self.image = pygame.Surface((100, 100))
+        self.color = (155, 154, 151)
         BestMetres(self.game)
 
     def update(self):
-        self.image = self.font.render(str(self.game.metres) + "m", True, (155, 154, 151))
+        self.image = self.font.render(str(self.game.metres) + "m", True, self.color)

@@ -1,5 +1,7 @@
 import pygame
 from .util import load_image, terminate
+from .settings import MUSIC_VOLUME
+
 
 class Death:
     def __init__(self, game):
@@ -12,6 +14,17 @@ class Death:
         self.restart = self.restart_images[0]
         self.main_menu = self.main_menu_images[0]
         self.exit = self.exit_images[0]
+        self.game.metres_counter.color = (255, 255, 255)
+        self.game.metres_counter.font.set_bold(True)
+        self.game.coin_counter.font.set_bold(True)
+        self.game.metres_counter.update()
+        self.game.coin_counter.update()
+
+        pygame.mixer.music.load("data/music/end.mp3")
+        pygame.mixer.music.set_volume(MUSIC_VOLUME)
+        if self.game.music:
+            pygame.mixer.music.play(-1)
+
         self.run()
 
     def init_images(self):
@@ -32,12 +45,18 @@ class Death:
 
     def events(self):
         for event in pygame.event.get():
-            if event.type== pygame.QUIT:
+            if event.type == pygame.QUIT:
                 terminate()
 
     def update(self):
         self.surface.blit(self.background, (0, 0))
-        self.surface.blit(self.you_died, (228, 100))
+        self.surface.blit(self.you_died, (228, 80))
+        metres_w = self.game.metres_counter.image.get_rect().w
+        coins_w = self.game.coin_counter.image.get_rect().w
+        self.surface.blit(self.game.coin_image, (400, 190))
+        self.surface.blit(self.game.coin_counter.image, (425, 192))
+        self.surface.blit(self.game.metres_counter.image,
+                          (550, 192))
         self.surface.blit(self.restart[0], self.restart[1])
         self.surface.blit(self.main_menu[0], self.main_menu[1])
         self.surface.blit(self.exit[0], self.exit[1])
@@ -71,5 +90,3 @@ class Death:
             self.exit = self.exit_images[0]
 
         pygame.display.flip()
-
-
