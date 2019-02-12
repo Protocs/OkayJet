@@ -8,7 +8,7 @@ from ..util import save_progress
 
 class Player(AnimatedSprite):
     IMAGE = "player.png"
-    COLUMNS = 11
+    COLUMNS = 12
     FLASHING_TIME = 500
 
     @property
@@ -17,6 +17,7 @@ class Player(AnimatedSprite):
 
     def __init__(self, game, pos):
         super().__init__(game, pos)
+        self.flying_current_frame = 0
 
         self.rect.y = BOTTOM_BORDER - self.rect.height
 
@@ -46,11 +47,14 @@ class Player(AnimatedSprite):
         space_bar_pressed = pygame.key.get_pressed()[pygame.K_SPACE]
 
         if space_bar_pressed:
-            self.change_frame(len(self.frames) - 1)
+            if pygame.time.get_ticks() > self.next_frame:
+                self.change_frame(len(self.frames) - (self.flying_current_frame % 2 + 1))
+                self.flying_current_frame += 1
+                self.next_frame += self.frames_changing
             self.speedup = 0.1
         else:
             if pygame.time.get_ticks() > self.next_frame:
-                self.change_frame((self.current_frame + 1) % (len(self.frames) - 1))
+                self.change_frame((self.current_frame + 1) % (len(self.frames) - 2))
                 self.next_frame += self.frames_changing
 
             if self.rect.y < (BOTTOM_BORDER - self.rect.height):
