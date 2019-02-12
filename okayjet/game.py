@@ -10,7 +10,7 @@ from .objects.player import Player
 from .objects.animated_sprite import AnimatedSprite
 from .objects.coin_counter import CoinCounter
 from .objects.metres_counter import MetresCounter
-from .objects.obstacles.yellow_laser import YellowLaser
+from .objects.extra_life import ExtraLife, ExtraLivesCounter
 from .objects.obstacles import OBSTACLES
 from .objects.obstacles.obstacle import Obstacle
 from .settings import *
@@ -40,7 +40,8 @@ class Game:
             'coin_structure': pygame.sprite.Group(),
             "obstacles": pygame.sprite.Group(),
             "rockets": pygame.sprite.Group(),
-            "yellow_lasers": pygame.sprite.Group()
+            "yellow_lasers": pygame.sprite.Group(),
+            "extra_lives": pygame.sprite.Group()
         }
 
         self.start_time = pygame.time.get_ticks()
@@ -56,6 +57,9 @@ class Game:
         self.best_progress = load_best_progress()
         if self.best_progress is None:
             self.best_progress = 0
+
+        self.extra_life_image = load_image("extra_life.png")
+        self.extra_lives_counter = ExtraLivesCounter(self)
 
         pygame.mixer.music.load("data/music/game.wav")
         pygame.mixer.music.set_volume(MUSIC_VOLUME)
@@ -109,6 +113,8 @@ class Game:
         elif event.type == OBSTACLE_SPAWN.id:
             _logger.debug('OBSTACLE_SPAWN event')
             random.choice(OBSTACLES)(self)
+        elif event.type == EXTRA_LIFE_SPAWN.id:
+            ExtraLife(self)
 
     def update(self):
         if not self.pause:
@@ -126,6 +132,7 @@ class Game:
         if not self.intro:
             self.background_x -= self.slide_speed
         self.surface.blit(self.coin_image, (10, 10))
+        self.surface.blit(self.extra_life_image, (SCREEN_WIDTH - 40, 10))
 
     def key_hold_handler(self):
         """Обработчик зажатых клавиш."""

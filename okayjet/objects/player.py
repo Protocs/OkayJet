@@ -9,6 +9,7 @@ from ..util import save_progress
 class Player(AnimatedSprite):
     IMAGE = "player.png"
     COLUMNS = 11
+    FLASHING_TIME = 500
 
     @property
     def frames_changing(self):
@@ -21,6 +22,10 @@ class Player(AnimatedSprite):
 
         # Ускорение свободного падения
         self.speedup = 0.1
+        # Дополнительные жизни
+        self.extra_lives = 0
+        self.flashing = False
+        self.flashing_start = None
 
     def kill(self):
         super().kill()
@@ -32,6 +37,11 @@ class Player(AnimatedSprite):
     def update(self):
         if self.game.intro:
             self.rect = self.rect.move(3, 0)
+
+        if self.flashing:
+            if pygame.time.get_ticks() - self.flashing_start >= self.FLASHING_TIME:
+                self.flashing = False
+            self.rect.y = (1 - self.rect.y > 0) * BOTTOM_BORDER - self.rect.height
 
         space_bar_pressed = pygame.key.get_pressed()[pygame.K_SPACE]
 
@@ -57,7 +67,21 @@ class Player(AnimatedSprite):
     def find_colliding(self):
         for obstacle in self.game.sprite_groups["obstacles"]:
             if pygame.sprite.collide_mask(self, obstacle):
-                self.kill()
+                self.kill_handler(obstacle)
         for coin in self.game.sprite_groups["coin_structure"]:
             if pygame.sprite.collide_mask(self, coin):
                 coin.collide()
+        for extra_life in self.game.sprite_groups["extra_lives"]:
+            if pygame.sprite.collide_mask(self, extra_life):
+                self.extra_lives += 1
+                extra_life.kill()
+
+    def kill_handler(self, obstacle):
+        if not self.extra_lives:
+            self.kill()
+            return
+        self.extra_lives -= 1
+        self.rect.y = BOTTOM_BORDER - self.rect.height
+        self.flashing = True
+        self.flashing_start = pygame.time.get_ticks()
+        obstacle.kill()
