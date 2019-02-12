@@ -34,6 +34,8 @@ class Rocket(Obstacle):
                     break
                 Rocket(self.game, (x, y), random.randint(100, 1000))
 
+        self.activate_sound = pygame.mixer.Sound("data/music/rocket.wav")
+
     def update(self):
         if self.delay_before_spawn:
             if pygame.time.get_ticks() - self.start_time >= self.delay_before_spawn:
@@ -63,3 +65,4 @@ class Rocket(Obstacle):
         self.rect = self.image.get_rect()
         self.rect.x = SCREEN_WIDTH + 10
         self.rect.y = y
+        self.activate_sound.play()
