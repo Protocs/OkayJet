@@ -2,7 +2,7 @@ from .obstacle import Obstacle
 from ...util import load_image
 import pygame
 import random
-from ...settings import SCREEN_WIDTH, BOTTOM_BORDER
+from ...settings import SCREEN_WIDTH, BOTTOM_BORDER, MUSIC_VOLUME
 
 
 def get_random_pos(h):
@@ -35,6 +35,7 @@ class Rocket(Obstacle):
                 Rocket(self.game, (x, y), random.randint(100, 1000))
 
         self.activate_sound = pygame.mixer.Sound("data/music/rocket.wav")
+        self.activate_sound.set_volume(MUSIC_VOLUME)
 
     def update(self):
         if self.delay_before_spawn:
