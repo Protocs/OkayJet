@@ -22,7 +22,7 @@ _logger = logging.getLogger('okayjet.game')
 class Game:
     """Главный класс игры."""
 
-    def __init__(self, surface):
+    def __init__(self, surface, music=True):
         self.surface = surface
 
         # Идет ли игра?
@@ -63,7 +63,9 @@ class Game:
 
         pygame.mixer.music.load("data/music/game.wav")
         pygame.mixer.music.set_volume(MUSIC_VOLUME)
-        pygame.mixer.music.play(-1)
+
+        if music:
+            pygame.mixer.music.play(-1)
 
     @property
     def slide_speed(self):

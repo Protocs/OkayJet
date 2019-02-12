@@ -12,5 +12,5 @@ pygame.display.set_caption(GAME_NAME)
 while True:
     start = Start(screen)
     start.run()
-    game = Game(screen)
+    game = Game(screen, start.music_button.state)
     game.run()

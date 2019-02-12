@@ -2,6 +2,7 @@ import pygame
 
 from .util import terminate, load_image
 from .objects.animated_sprite import AnimatedSprite
+from .objects.music_button import MusicButton
 from .settings import MUSIC_VOLUME
 
 
@@ -36,6 +37,8 @@ class Start:
         self.start_button = AnimatedStartButton(self, (150, 400))
         self.logo = load_image("logo.png")
 
+        self.music_button = MusicButton(self)
+
         pygame.mixer.music.load("data/music/start.mp3")
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(MUSIC_VOLUME)
@@ -52,6 +55,8 @@ class Start:
                     pygame.mixer.music.set_volume(i / 10)
                     pygame.time.delay(20)
                 self.start = False
+            elif event.type == pygame.MOUSEBUTTONUP:
+                self.music_button.mouse_handler(event.pos)
 
             elif event.type == pygame.QUIT:
                 terminate()
