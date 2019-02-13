@@ -41,8 +41,10 @@ class Player(AnimatedSprite):
 
         if self.flashing:
             if pygame.time.get_ticks() - self.flashing_start >= self.FLASHING_TIME:
+                self.rect.y = BOTTOM_BORDER - self.rect.height
                 self.flashing = False
-            self.rect.y = (1 - self.rect.y > 0) * BOTTOM_BORDER - self.rect.height
+            else:
+                self.rect.y = (1 - self.rect.y > 0) * BOTTOM_BORDER - self.rect.height
 
         space_bar_pressed = pygame.key.get_pressed()[pygame.K_SPACE]
 
