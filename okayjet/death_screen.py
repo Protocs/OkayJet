@@ -1,6 +1,7 @@
 import pygame
 from .util import load_image, terminate
 from .settings import MUSIC_VOLUME
+from .objects.metres_counter import MetresCounter, BestMetres
 
 
 class Death:
@@ -19,11 +20,19 @@ class Death:
         self.game.coin_counter.font.set_bold(True)
         self.game.metres_counter.update()
         self.game.coin_counter.update()
+        self.font = pygame.font.Font("data/fonts/PressStart2P.ttf", 16)
 
         pygame.mixer.music.load("data/music/end.mp3")
         pygame.mixer.music.set_volume(MUSIC_VOLUME)
         if self.game.music:
             pygame.mixer.music.play(-1)
+
+        if self.game.metres > self.game.best_progress:
+            self.metres = str(self.game.metres) + "m (NEW BEST)"
+        else:
+            self.metres = str(self.game.metres) + "m (BEST: {})".format(self.game.best_progress)
+
+        self.metres_counter_image = self.font.render(self.metres, True, (155, 154, 151))
 
         self.run()
 
@@ -55,7 +64,7 @@ class Death:
         coins_w = self.game.coin_counter.image.get_rect().w
         self.surface.blit(self.game.coin_image, (400, 190))
         self.surface.blit(self.game.coin_counter.image, (425, 192))
-        self.surface.blit(self.game.metres_counter.image,
+        self.surface.blit(self.metres_counter_image,
                           (550, 192))
         self.surface.blit(self.restart[0], self.restart[1])
         self.surface.blit(self.main_menu[0], self.main_menu[1])
