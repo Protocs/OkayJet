@@ -174,5 +174,3 @@ class Game:
 
     def restart(self):
         self.__init__(self.surface, self.music)
-
-
