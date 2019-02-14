@@ -32,7 +32,7 @@ class Death:
         else:
             self.metres = str(self.game.metres) + "m (BEST: {})".format(self.game.best_progress)
 
-        self.metres_counter_image = self.font.render(self.metres, True, (155, 154, 151))
+        self.metres_counter_image = self.font.render(self.metres, True, (255, 255, 255))
 
         self.run()
 
@@ -62,10 +62,9 @@ class Death:
         self.surface.blit(self.you_died, (228, 80))
         metres_w = self.game.metres_counter.image.get_rect().w
         coins_w = self.game.coin_counter.image.get_rect().w
-        self.surface.blit(self.game.coin_image, (400, 190))
-        self.surface.blit(self.game.coin_counter.image, (425, 192))
-        self.surface.blit(self.metres_counter_image,
-                          (550, 192))
+        self.surface.blit(self.game.coin_image, (440 - coins_w, 190))
+        self.surface.blit(self.game.coin_counter.image, (465 - coins_w, 192))
+        self.surface.blit(self.metres_counter_image, (550, 192))
         self.surface.blit(self.restart[0], self.restart[1])
         self.surface.blit(self.main_menu[0], self.main_menu[1])
         self.surface.blit(self.exit[0], self.exit[1])
